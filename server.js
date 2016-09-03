@@ -7,12 +7,7 @@
 var express = require('express'); // call express
 var app = express(); // define our app using express
 var bodyParser = require('body-parser');
-
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://pesho:p3shaka@localhost:27017/costsMonitor'); // connect to our database
-
-var expenseType = require('./models/ExpenseType.js');
-var expense = require('./models/Expense.js');
+var models = require('./models')
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -28,7 +23,7 @@ var port = process.env.PORT || 8080; // set our port
 var router = express.Router(); // get an instance of the express Router
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-require('./routes')(router);
+require('./routes')(router, models);
 
 // more routes for our API will happen here
 
@@ -36,7 +31,12 @@ require('./routes')(router);
 // all of our routes will be prefixed with /api
 app.use('/api', router);
 
-// START THE SERVER
+// SYNC DATABASE
 // =============================================================================
-app.listen(port);
-console.log('Magic happens on port ' + port);
+models.sequelize.sync().then(function () {
+    // START THE SERVER
+    // =============================================================================
+    var server = app.listen(port, function () {
+        console.log('Magic happens on port ' + port);
+    });
+});

@@ -2,7 +2,7 @@ var fs = require('fs'),
   path = require('path');
 
 
-module.exports = function(router) {
+module.exports = function(router, models) {
 
     router.get('/', function(req, res) {
         res.json({ message: 'hooray! welcome to our api!' });
@@ -14,7 +14,7 @@ module.exports = function(router) {
           return;
         }
 
-        require(__dirname + '/' + route)(router);
+        require(__dirname + '/' + route)(router, models);
       });
     });
 };

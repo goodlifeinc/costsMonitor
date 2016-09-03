@@ -1,15 +1,14 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema,
-    ObjectId = Schema.Types.ObjectId;
-
-var ExpenseTypeSchema = new Schema({
-    name: String,
-    expenses: [{
-        type: ObjectId,
-        ref: 'Expense'
-    }]
-}, {
-    timestamps: true
-});
-
-module.exports = mongoose.model('ExpenseType', ExpenseTypeSchema);
+'use strict';
+module.exports = function (sequelize, DataTypes) {
+  var ExpenseType = sequelize.define('ExpenseType', {
+    name: DataTypes.STRING,
+  }, {
+      classMethods: {
+        associate: function (models) {
+          // associations can be defined here
+          models.ExpenseType.hasMany(models.Expense);
+        }
+      }
+    });
+  return ExpenseType;
+};
