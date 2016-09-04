@@ -1,5 +1,4 @@
 var Sequelize = require('sequelize');
-var when = require('when');
 
 module.exports = function (router, models) {
 

@@ -1,13 +1,16 @@
 // server.js
 
+var path = require('path');
+
 // BASE SETUP
 // =============================================================================
 
 // call the packages we need
 var express = require('express'); // call express
 var app = express(); // define our app using express
+var frontEnd = express(); // define our frontend to use expres
 var bodyParser = require('body-parser');
-var models = require('./models')
+var models = require('./models');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -17,6 +20,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 var port = process.env.PORT || 8080; // set our port
+var frontEndPort = process.env.PORT || 8081; // set our port
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -39,4 +43,14 @@ models.sequelize.sync().then(function () {
     var server = app.listen(port, function () {
         console.log('Magic happens on port ' + port);
     });
+});
+
+frontEnd.use('/public', express.static('./front/public'));
+
+frontEnd.all('*', function (req, res) {
+    res.sendFile(path.join(__dirname + '/front/index.html'));
+});
+
+frontEnd.listen(frontEndPort, function () {
+    console.log('Magic frontend happens on port ' + frontEndPort);
 });

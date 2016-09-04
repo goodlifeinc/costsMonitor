@@ -4,12 +4,21 @@
   "description": "An application for monitoring expenses",
   "main": "server.js",
   "dependencies": {
+    "angular": "^1.5.8",
+    "angular-animate": "^1.5.8",
+    "angular-aria": "^1.5.8",
+    "angular-material": "^1.1.1",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "mysql": "^2.11.1",
     "sequelize": "^3.24.1"
   },
   "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^2.0.0",
     "jshint": "^2.9.3",
     "sequelize-cli": "^2.4.0"
   },

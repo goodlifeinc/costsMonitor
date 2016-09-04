@@ -52,10 +52,18 @@ module.exports = function (router, models) {
         })
         // update the expense with this id (accessed at PUT http://localhost:8080/api/expense/:expenseId)
         .put(function (req, res) {
+            var params = {
+                name: req.body.name,
+                description: req.body.description,
+                amount: req.body.amount,
+                ExpenseTypeId: req.body.expenseTypeId
+            };
 
-            models.Expense.update({
-                name: req.body.name
-            },
+            Object.keys(params).forEach(function (key) {
+                (params[key] === undefined || params[key] === null) && delete params[key]
+            });
+
+            models.Expense.update(params,
                 {
                     where: {
                         id: req.params.expenseId
